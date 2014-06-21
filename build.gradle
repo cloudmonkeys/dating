@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+// Where to look for dependancies
+repositories {
+	mavenCentral()
+}
+
+// List of dependancies
+dependencies {
+	compile "org.springframework:spring-core:4.0.3.RELEASE"
+	compile "org.springframework:spring-context:4.0.3.RELEASE"
+	compile "org.springframework:spring-beans:4.0.3.RELEASE"
+	compile "org.springframework:spring-jdbc:4.0.3.RELEASE"
+	compile "com.jolbox:bonecp:0.8.0.RELEASE"
+	compile "mysql:mysql-connector-java:5.1.30"     
+	compile "org.hibernate:hibernate-core:4.3.5.Final"
+	compile "org.springframework:spring-orm:4.0.3.RELEASE"
+	compile 'org.slf4j:slf4j-log4j12:1.7.7'
+	compile "log4j:log4j:1.2.17"
+	compile "org.apache.tiles:tiles-jsp:3.0.4"
+	compile "org.springframework:spring-webmvc:4.0.3.RELEASE" 
+	compile "jstl:jstl:1.2"
+	providedCompile "javax:javaee-api:7.0"
+	compile "joda-time:joda-time:2.3"
+	compile "org.jadira.usertype:usertype.core:3.2.0.GA"  
+	compile "org.springframework.security:spring-security-core:3.2.4.RELEASE"
+	compile "org.springframework.security:spring-security-web:3.2.4.RELEASE"
+	compile "org.springframework.security:spring-security-config:3.2.4.RELEASE"
+	compile "org.springframework.security:spring-security-taglibs:3.2.4.RELEASE"
+	compile "org.springframework.security:spring-security-crypto:3.2.4.RELEASE"
+}
+
+// Naming and versioning the JAR that is built
+jar {
+	baseName = 'matrimonial'
+	version = '0.1.0'
+}
+
+// Build a gradle wrapper, version 1.10
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.10'
+}
+
+task showMeCache << {
+  configurations.compile.each { println it }
+}
+
+eclipse {
+	wtp {
+		facet {
+		  facet name: 'jst.web', version: '3.0'
+		  facet name: 'java', version: '1.8'
+		  facet name: 'wst.jsdt.web', version: '1.0'
+		}
+	}
+}

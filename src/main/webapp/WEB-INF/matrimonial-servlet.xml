@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+  		http://www.springframework.org/schema/beans/spring-beans.xsd
+  		http://www.springframework.org/schema/context
+  		http://www.springframework.org/schema/context/spring-context.xsd
+  		http://www.springframework.org/schema/mvc    
+  		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- Sets up a handler for serving up static content -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Enables annotation based controllers, SR-330 validation, message conversion 
+		and field formatting -->
+	<mvc:annotation-driven />
+
+	<!-- Scan and register annotated classes as beans in the spring context. 
+		This will auto find my controllers -->
+	<context:component-scan base-package="com.matrimonial.controller" />
+
+	<!-- Dispatcher Servlet consults this view resolver to exchange logical 
+		view name to actual view implementation. This class looks up a view that 
+		is defined as a Tiles template -->
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" />
+
+	<!-- Spring is made aware of the available Tiles definitions using a TilesConfigurer -->
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles/views.xml</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

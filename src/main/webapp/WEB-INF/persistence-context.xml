@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+  	http://www.springframework.org/schema/beans/spring-beans.xsd
+  	http://www.springframework.org/schema/context
+  	http://www.springframework.org/schema/context/spring-context.xsd
+  	http://www.springframework.org/schema/util
+  	http://www.springframework.org/schema/util/spring-util.xsd
+  	http://www.springframework.org/schema/tx 
+  	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Data source properties -->
+	<util:properties id="dataSourceSettings"
+		location="classpath:datasource.properties" />
+
+	<!-- Pooled data source using BoneCP -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="#{dataSourceSettings['jdbc.driverClass']}" />
+		<property name="jdbcUrl" value="#{dataSourceSettings['jdbc.url']}" />
+		<property name="username" value="#{dataSourceSettings['jdbc.username']}" />
+		<property name="password" value="#{dataSourceSettings['jdbc.password']}" />
+		<property name="idleConnectionTestPeriodInMinutes" value="60" />
+		<property name="idleMaxAgeInMinutes" value="240" />
+		<property name="maxConnectionsPerPartition" value="30" />
+		<property name="minConnectionsPerPartition" value="10" />
+		<property name="partitionCount" value="3" />
+		<property name="acquireIncrement" value="5" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
+	</bean>
+
+	<!-- Using Spring JDBC framework to remove boilerplate code -->
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
+	<!-- The user JDBC DAO object -->
+	<bean id="userJDBCDao" class="com.matrimonial.dao.impl.UserDaoJDBCImpl">
+		<property name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate" />
+	</bean>
+
+	<!-- Hibernate session factory bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.matrimonial.domain"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">#{dataSourceSettings['hibernate.dialect']}</prop>
+				<prop key="hibernate.hbm2ddl.auto">#{dataSourceSettings['hibernate.hbm2ddl.auto']}
+				</prop>
+				<prop key="hibernate.show_sql">#{dataSourceSettings['hibernate.show_sql']}</prop>
+				<prop key="hibernate.format_sql">#{dataSourceSettings['hibernate.format_sql']}</prop>
+				<prop key="hibernate.use_sql_comments">#{dataSourceSettings['hibernate.use_sql_comments']}
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- The user Hibernate DAO object -->
+	<bean id="userHibernateDao" class="com.matrimonial.dao.impl.UserDaoHibernateImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Adds an advisor to any bean that is annotated with @Repository so platform 
+		specific exceptions are caught and rethrown as one of Springs unchecked data 
+		exceptions -->
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<context:annotation-config />
+</beans>
