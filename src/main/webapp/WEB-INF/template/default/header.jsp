@@ -3,11 +3,11 @@
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
       <span class="sr-only">Toggle navigation</span>
     </button>
-    <a class="navbar-brand" href="#">Matrimonial</a>
+    <a class="navbar-brand" href="/dating">Matrimonial</a>
   </div>
   <div class="collapse navbar-collapse" id="navbar-collapse-01">
     <ul class="nav navbar-nav">           
-      <li class="active"><a href="#fakelink">Home</a></li>
+      <li class="active"><a href="/dating">Home</a></li>
       <li><a href="#fakelink">Messages
       		<!-- Indicator with number -->
         	<span class="navbar-new">2</span>
