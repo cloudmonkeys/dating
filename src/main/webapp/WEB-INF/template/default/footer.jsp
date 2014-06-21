@@ -1,6 +1,6 @@
-
-<div>
-	<div class="container footer">
-		<p>Footer</p>
+<footer>
+	<div class="container-fluid">
+		<h3 class="footer-title">Footer stuff</h3>
+		<p>&copy; Asian Dating 2014
 	</div>
-</div>
+</footer>
