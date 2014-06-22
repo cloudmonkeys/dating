@@ -2,12 +2,13 @@ package com.matrimonial.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.inject.Inject;
-
 import org.springframework.ui.Model;
 
 import javax.validation.Valid;
@@ -19,36 +20,37 @@ import com.matrimonial.service.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserController
-{
+public class UserController {
+	@Autowired
 	private UserService userService;
 
-	@Inject
-	public void setEmployeeService(UserService userService)
-	{
+	public void setEmployeeService(UserService userService) {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public String displayUserForm(Model model)
-	{
-		
-		//Will probably load all of these from a properties file when ready to go live so easy to add/remove
-		model.addAttribute(new User());
-		
+	@ModelAttribute("profileForList")
+	public List<String> getProfileForList() {
 		List<String> profileForList = new ArrayList<String>();
 		profileForList.add("Please select");
 		profileForList.add("Self");
 		profileForList.add("Brother");
 		profileForList.add("Sister");
-		
+		return profileForList;
+	}
+
+	@ModelAttribute("ethnicityList")
+	public List<String> getEthnicityList() {
 		List<String> ethnicityList = new ArrayList<String>();
 		ethnicityList.add("Please select");
 		ethnicityList.add("Pakistani");
 		ethnicityList.add("Indian");
 		ethnicityList.add("Bengali");
 		ethnicityList.add("Arab");
-		
+		return ethnicityList;
+	}
+
+	@ModelAttribute("religiousSectList")
+	public List<String> getReligiousSectList() {
 		List<String> religiousSectList = new ArrayList<String>();
 		religiousSectList.add("Please select");
 		religiousSectList.add("Sunni - Hanafi");
@@ -57,7 +59,11 @@ public class UserController
 		religiousSectList.add("Sunni - Hanbali");
 		religiousSectList.add("Shia");
 		religiousSectList.add("Sufi");
-		
+		return religiousSectList;
+	}
+
+	@ModelAttribute("communityLanguageList")
+	public List<String> getCommunityLanguageList() {
 		List<String> communityLanguageList = new ArrayList<String>();
 		communityLanguageList.add("Please select");
 		communityLanguageList.add("Urdu");
@@ -65,7 +71,11 @@ public class UserController
 		communityLanguageList.add("Gujurati");
 		communityLanguageList.add("Bengali");
 		communityLanguageList.add("Arabic");
-		
+		return communityLanguageList;
+	}
+
+	@ModelAttribute("whereDidYouHearAboutUsList")
+	public List<String> getWhereDidYouHearAboutUsList() {
 		List<String> whereDidYouHearAboutUsList = new ArrayList<String>();
 		whereDidYouHearAboutUsList.add("Please select");
 		whereDidYouHearAboutUsList.add("Friend or family");
@@ -73,32 +83,31 @@ public class UserController
 		whereDidYouHearAboutUsList.add("TV advert");
 		whereDidYouHearAboutUsList.add("Radio");
 		whereDidYouHearAboutUsList.add("Community leader/Imam");
-		
-		model.addAttribute("profileForList", profileForList);
-		model.addAttribute("ethnicityList", ethnicityList);
-		model.addAttribute("religiousSectList", religiousSectList);
-		model.addAttribute("communityLanguageList", communityLanguageList);
-		model.addAttribute("whereDidYouHearAboutUsList", whereDidYouHearAboutUsList);
-		
+		return whereDidYouHearAboutUsList;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String displayUserForm(Model model) {
+		model.addAttribute(new User());
 		return "user/register";
 	}
 
-	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String addUserFromForm(@Valid User user, BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-		{
-			return "user/edit";
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String addUserFromForm(@Valid User user, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "user/register";
 		}
+		user.setJoinDate(new LocalDate());
+		// Need to hash the password here and save that to the DB
 		userService.addUser(user);
 
-		//Redirecting to avoid duplicate submission of the form
-		return "redirect:/users/" + user.getUsername();
+		// Redirecting to avoid duplicate submission of the form
+		return "redirect:/user/" + user.getUsername();
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public String loginUser(@Valid User user, BindingResult bindingResult)
-	{
-		return null;
+
+	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
+	public String showUserProfile(@PathVariable String username, Model model) {
+		model.addAttribute("user", userService.getUserByUsername(username));
+		return "user/profile";
 	}
 }
