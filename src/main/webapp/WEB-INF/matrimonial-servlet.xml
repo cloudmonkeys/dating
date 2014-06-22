@@ -33,5 +33,10 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- MessageSource implementation that accesses resource bundles using specified basenames -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    	<property name="basename" value="messages"/>
+	</bean>
 
 </beans>
