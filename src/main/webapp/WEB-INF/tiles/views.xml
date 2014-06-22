@@ -19,4 +19,9 @@
         <put-attribute name="title" value="Register"/>
         <put-attribute name="body" value="/WEB-INF/jsp/user/register.jsp"/>
     </definition>
+    
+    <definition name="user/profile" extends="default">
+        <put-attribute name="title" value="View profile"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/user/profile.jsp"/>
+    </definition>
 </tiles-definitions>
