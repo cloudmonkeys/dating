@@ -7,4 +7,6 @@
 	<p><joda:format value="${user.dateOfBirth}" style="M-" /></p>
 	<P>${user.gender}, ${user.ethnicity}</P>
 	<p>${user.email}</p>
+	
+	<p><a href="/dating/user/${user.username}/edit" class="btn btn-wide btn-primary">Edit</a></p>
 </div>

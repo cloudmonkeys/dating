@@ -24,4 +24,9 @@
         <put-attribute name="title" value="View profile"/>
         <put-attribute name="body" value="/WEB-INF/jsp/user/profile.jsp"/>
     </definition>
+    
+    <definition name="user/profile/edit" extends="default">
+        <put-attribute name="title" value="Edit profile"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/user/edit.jsp"/>
+    </definition>
 </tiles-definitions>

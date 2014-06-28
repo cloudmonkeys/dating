@@ -92,6 +92,27 @@ public class UserController {
 		model.addAttribute(new User());
 		return "user/register";
 	}
+	
+	@RequestMapping(value = "/{username}/edit", method = RequestMethod.GET)
+	public String displayEditUserForm(@PathVariable String username, Model model) {
+		User user = userService.getUserByUsername(username);
+		if(user != null){
+			model.addAttribute("user", user);
+			return "user/profile/edit";
+		}
+		// TODO: Need to return 404 if user doesn't exist?
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/{username}/edit", method = RequestMethod.POST)
+	public String editUser(@PathVariable String username, @Valid User user, BindingResult bindingResult, RedirectAttributes ra) {
+		if (bindingResult.hasErrors()) {
+			return "user/profile/edit";
+		}
+		// Update the user details
+		userService.updateDetails(user);
+		return "redirect:/user/" + user.getUsername();
+	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String addUserFromForm(@Valid User user, BindingResult bindingResult, RedirectAttributes ra) {
