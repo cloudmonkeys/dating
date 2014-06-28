@@ -2,18 +2,19 @@ package com.matrimonial.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.ui.Model;
-
-import javax.validation.Valid;
-
-import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.matrimonial.domain.User;
 import com.matrimonial.service.UserService;
@@ -93,12 +94,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String addUserFromForm(@Valid User user, BindingResult bindingResult) {
+	public String addUserFromForm(@Valid User user, BindingResult bindingResult, RedirectAttributes ra) {
 		if (bindingResult.hasErrors()) {
 			return "user/register";
 		}
 		user.setJoinDate(new LocalDate());
-		// Need to hash the password here and save that to the DB
+		// TODO: Need to hash the password here and save that to the DB
 		userService.addUser(user);
 
 		// Redirecting to avoid duplicate submission of the form
@@ -106,8 +107,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
-	public String showUserProfile(@PathVariable String username, Model model) {
-		model.addAttribute("user", userService.getUserByUsername(username));
-		return "user/profile";
+	public String showUserProfile(@PathVariable String username, Model model, RedirectAttributes ra) {
+		User user = userService.getUserByUsername(username);
+		if(user != null){
+			model.addAttribute("user", user);
+			return "user/profile";
+		}
+		// TODO: Need to return 404 if user doesn't exist?
+		return "redirect:/";
 	}
 }
