@@ -11,12 +11,12 @@
 				<table class="table table-striped">
 					<thead><tr><th>Name</th><th>Ethnicity</th><th>Gender</th><th>Email</th></tr></thead>
 			</c:if>
-			<tr><td>${user.firstName} ${user.lastName}</td><td>${user.ethnicity}</td><td>${user.gender}</td><td>${user.email}</td></tr>
+			<tr><td><a href="/dating/user/${user.username}">${user.firstName} ${user.lastName}</a></td><td>${user.ethnicity}</td><td>${user.gender}</td><td>${user.email}</td></tr>
 			<c:if test="${loop.last}"></table></c:if>
 	</c:forEach>
 		
 	<p>
-		<span class="fui-user"></span> <a href="/matrimonial/user">Add user</a>
+		<span class="fui-user"></span> <a href="/matrimonial/register">Add user</a>
 	</p>
 	
 	<hr />
