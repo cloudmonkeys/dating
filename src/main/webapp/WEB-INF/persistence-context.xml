@@ -65,6 +65,11 @@
 	<bean id="userHibernateDao" class="com.matrimonial.dao.impl.UserDaoHibernateImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<!-- The message Hibernate DAO object -->
+	<bean id="messageHibernateDao" class="com.matrimonial.dao.impl.MessageDaoHibernateImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

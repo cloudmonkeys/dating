@@ -15,6 +15,7 @@
     	<put-attribute name="body" value="/WEB-INF/jsp/index.jsp"/>
     </definition>
 
+	<!-- User views -->
     <definition name="user/register" extends="default">
         <put-attribute name="title" value="Register"/>
         <put-attribute name="body" value="/WEB-INF/jsp/user/register.jsp"/>
@@ -28,5 +29,21 @@
     <definition name="user/profile/edit" extends="default">
         <put-attribute name="title" value="Edit profile"/>
         <put-attribute name="body" value="/WEB-INF/jsp/user/edit.jsp"/>
+    </definition>
+    
+    <!-- Message views -->
+    <definition name="message/list" extends="default">
+        <put-attribute name="title" value="Messages"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/message/list.jsp"/>
+    </definition>
+    
+    <definition name="message/show" extends="default">
+        <put-attribute name="title" value="View message"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/message/display.jsp"/>
+    </definition>
+    
+    <definition name="message/new" extends="default">
+        <put-attribute name="title" value="New message"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/message/new.jsp"/>
     </definition>
 </tiles-definitions>

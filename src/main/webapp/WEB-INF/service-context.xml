@@ -7,9 +7,14 @@
   	http://www.springframework.org/schema/context
   	http://www.springframework.org/schema/context/spring-context.xsd">
 
-  	<!-- Employee Service -->
+  	<!-- User Service -->
 	<bean id="userService" class="com.matrimonial.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userHibernateDao"/>
+	</bean>
+	
+	<!-- Message Service -->
+	<bean id="messageService" class="com.matrimonial.service.impl.MessageServiceImpl">
+		<property name="messageDao" ref="messageHibernateDao"/>
 	</bean>
 
 </beans>

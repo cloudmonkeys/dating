@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="navbar-collapse-01">
     <ul class="nav navbar-nav">           
       <li class="active"><a href="/dating">Home</a></li>
-      <li><a href="#fakelink">Messages
+      <li><a href="/dating/messages">Messages
       		<!-- Indicator with number -->
         	<span class="navbar-new">2</span>
           </a>
