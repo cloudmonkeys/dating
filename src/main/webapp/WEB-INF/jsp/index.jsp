@@ -16,7 +16,7 @@
 	</c:forEach>
 		
 	<p>
-		<span class="fui-user"></span> <a href="/matrimonial/register">Add user</a>
+		<span class="fui-user"></span> <a href="/dating/user/register">Add user</a>
 	</p>
 	
 	<hr />
