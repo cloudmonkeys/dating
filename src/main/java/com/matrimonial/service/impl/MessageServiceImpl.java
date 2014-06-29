@@ -35,4 +35,9 @@ public class MessageServiceImpl implements MessageService
 	public List<Message> getAllMessagesToUser(User user) {
 		return messageDao.getAllMessagesToUser(user);
 	}
+	
+	@Override
+	public void updateMessage(Message message) {
+		messageDao.updateMessage(message);
+	}
 }

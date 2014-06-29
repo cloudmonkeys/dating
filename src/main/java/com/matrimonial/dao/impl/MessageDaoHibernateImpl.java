@@ -53,4 +53,10 @@ public class MessageDaoHibernateImpl implements MessageDao {
 		criteria.add(Restrictions.eq("toUser", user.username));
 		return (List<Message>) criteria.list();
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void updateMessage(Message message) {
+		this.sessionFactory.getCurrentSession().update(message);
+	}
 }

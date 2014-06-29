@@ -14,4 +14,6 @@ public interface MessageDao
 	public List<Message> getAllMessagesFromUser(User user);
 	
 	public List<Message> getAllMessagesToUser(User user);
+	
+	public void updateMessage(Message message);
 }
