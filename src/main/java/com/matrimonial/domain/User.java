@@ -1,9 +1,10 @@
 package com.matrimonial.domain;
 
-import javax.persistence.Entity;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -22,7 +23,7 @@ public class User {
 	@Column(name = "username")
 	@NotEmpty
 	@Pattern(regexp = "^[a-zA-Z0-9]*$")
-	private String username;
+	public String username;
 
 	@Column(name = "password", nullable = false)
 	@NotEmpty
@@ -36,6 +37,9 @@ public class User {
 	@Column(name = "last_name", nullable = false)
 	@NotEmpty
 	private String lastName;
+	
+	@Transient
+	private String fullName;
 
 	@Column(name = "email", nullable = false)
 	@NotEmpty
@@ -105,6 +109,14 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getEmail() {
