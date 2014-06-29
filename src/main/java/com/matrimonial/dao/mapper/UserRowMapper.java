@@ -1,12 +1,13 @@
 package com.matrimonial.dao.mapper;
 
-import com.matrimonial.domain.User;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.jdbc.core.RowMapper;
+
+import com.matrimonial.domain.User;
 
 public class UserRowMapper implements RowMapper<User> {
 	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -21,7 +22,7 @@ public class UserRowMapper implements RowMapper<User> {
 		user.setProfileFor(rs.getString("profile_for"));
 		LocalDate dateOfBirth = LocalDate.fromDateFields(rs.getDate("date_of_birth"));
 		user.setDateOfBirth(dateOfBirth);
-		LocalDate joinDate = LocalDate.fromDateFields(rs.getDate("join_date"));
+		DateTime joinDate = new DateTime(rs.getDate("join_date"));
 		user.setJoinDate(joinDate);
 		user.setEthnicity(rs.getString("ethnicity"));
 		user.setReligiousSect(rs.getString("religious_sect"));

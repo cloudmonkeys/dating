@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -119,7 +119,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "user/register";
 		}
-		user.setJoinDate(new LocalDate());
+		user.setJoinDate(new DateTime());
 		// TODO: Need to hash the password here and save that to the DB
 		userService.addUser(user);
 

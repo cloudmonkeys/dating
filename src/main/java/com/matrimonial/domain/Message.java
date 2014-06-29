@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 
 import com.matrimonial.validator.NotDefaultSelect;
 
@@ -34,12 +34,12 @@ public class Message {
 	private String toUser;
 
 	@Column(name = "sent_date", nullable = false)
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate sentDate;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime sentDate;
 	
 	@Column(name = "opened_date", nullable = true)
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate openedDate;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime openedDate;
 
 	@Column(name = "subject", nullable = false)
 	@NotDefaultSelect
@@ -73,19 +73,19 @@ public class Message {
 		this.toUser = toUser;
 	}
 
-	public LocalDate getSentDate() {
+	public DateTime getSentDate() {
 		return sentDate;
 	}
 
-	public void setSentDate(LocalDate sentDate) {
+	public void setSentDate(DateTime sentDate) {
 		this.sentDate = sentDate;
 	}
 
-	public LocalDate getOpenedDate() {
+	public DateTime getOpenedDate() {
 		return openedDate;
 	}
 
-	public void setOpenedDate(LocalDate openedDate) {
+	public void setOpenedDate(DateTime openedDate) {
 		this.openedDate = openedDate;
 	}
 

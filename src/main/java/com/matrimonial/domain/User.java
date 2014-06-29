@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -56,8 +57,8 @@ public class User {
 	private LocalDate dateOfBirth;
 
 	@Column(name = "join_date", nullable = false)
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate joinDate;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime joinDate;
 
 	@Column(name = "profile_for", nullable = false)
 	@NotDefaultSelect
@@ -143,11 +144,11 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public LocalDate getJoinDate() {
+	public DateTime getJoinDate() {
 		return joinDate;
 	}
 
-	public void setJoinDate(LocalDate joinDate) {
+	public void setJoinDate(DateTime joinDate) {
 		this.joinDate = joinDate;
 	}
 

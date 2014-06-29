@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +59,12 @@ public class MessageController {
 		Message message = messageService.getMessageById(id);
 		if(message != null){
 			model.addAttribute("message", message);
+			
+			// Mark message as read
+			if(message.getOpenedDate() != null){
+				message.setOpenedDate(new DateTime());
+				messageService.updateMessage(message);
+			}
 			return "message/show";
 		}
 		// TODO: Need to return 404 if message doesn't exist?
@@ -77,10 +83,10 @@ public class MessageController {
 			return "message/new";
 		}
 		
-		message.setSentDate(new LocalDate());
+		message.setSentDate(new DateTime());
 		messageService.sendMessage(message);
 
 		// Redirecting to avoid duplicate submission of the form
-		return "redirect:/messages/" + message.getId();
+		return "redirect:/messages/";
 	}
 }
