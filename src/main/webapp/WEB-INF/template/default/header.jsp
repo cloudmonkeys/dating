@@ -13,7 +13,7 @@
         	<span class="navbar-new">2</span>
           </a>
       </li>
-      <li><a href="#fakelink">Gallery</a></li>
+      <li><a href="/dating/user/profile">Profile</a></li>
     </ul>    
     <a class="btn btn-default navbar-btn btn-sm" href="/dating/user/register">Register</a>       
     <form class="navbar-form navbar-right" action="#" role="search">
